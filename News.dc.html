@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="news" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px 80px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:8px">{{ nt.title }}</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:40px">{{ nt.desc }}</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:32px">
+    <sc-for list="{{ items }}" as="n" hint-placeholder-count="4">
+      <a href="{{ n.href }}" style="text-decoration:none;color:inherit;display:block">
+        <image-slot id="{{ n.imgId }}" style="width:100%;height:180px;margin-bottom:16px" shape="rounded" radius="8" placeholder="Новина"></image-slot>
+        <div style="font-size:13px;color:var(--fg-subtle);margin-bottom:8px">{{ n.dateLabel }}</div>
+        <div style="font-weight:600;font-size:18px;line-height:26px;color:var(--fg-default);margin-bottom:8px">{{ n.titleOut }}</div>
+        <div style="font-size:14px;line-height:22px;color:var(--fg-muted)">{{ n.excerptOut }}</div>
+      </a>
+    </sc-for>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, i18n: null };
+  async componentDidMount() {
+    const [data, i18n, tr] = await Promise.all([import("./data.js"), import("./i18n.js"), import("./transitions.js")]);
+    tr.bindPageTransitions();
+    this.setState({ data, i18n });
+  }
+  renderVals() {
+    const d = this.state.data, mod = this.state.i18n;
+    if (!d || !mod) return {};
+    const lang = mod.getLang();
+    const en = lang === "en";
+    const months = en ? ["January","February","March","April","May","June","July","August","September","October","November","December"]
+      : ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+    const fmt = (iso) => { const dt = new Date(iso); return en ? `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}` : `${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`; };
+    return {
+      nt: mod.t[lang].news,
+      items: d.news.map(n => ({ ...n, href: `Article.dc.html?id=${n.id}`, imgId: `news-full-${n.id}`, dateLabel: fmt(n.date), titleOut: en ? n.titleEn : n.title, excerptOut: en ? n.excerptEn : n.excerpt })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+@media (max-width:800px){
+  .pr-layout,.pr-cta{grid-template-columns:1fr!important}
+}
+@media (max-width:480px){
+  .pr-thumbs{grid-template-columns:repeat(4,1fr)!important;gap:8px!important}
+}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="product" hint-size="100%,72px"></dc-import>
+
+<sc-if value="{{ loaded }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1200px;margin:0 auto;padding:32px 32px 80px">
+  <div style="font-size:13px;color:var(--fg-muted);margin-bottom:24px;display:flex;gap:6px;align-items:center">
+    <a href="Catalog.dc.html">{{ pt.catalog }}</a><span>/</span><span style="color:var(--fg-default)">{{ p.nameOut }}</span>
+  </div>
+
+  <div class="pr-layout" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-bottom:64px">
+    <div>
+      <image-slot id="{{ p.mainImgId }}" style="width:100%;height:380px;margin-bottom:16px" shape="rounded" radius="12" placeholder="Фото товару"></image-slot>
+      <div class="pr-thumbs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <image-slot id="{{ p.thumb1 }}" style="width:100%;height:80px" shape="rounded" radius="8" placeholder="Фото 2"></image-slot>
+        <image-slot id="{{ p.thumb2 }}" style="width:100%;height:80px" shape="rounded" radius="8" placeholder="Фото 3"></image-slot>
+        <image-slot id="{{ p.thumb3 }}" style="width:100%;height:80px" shape="rounded" radius="8" placeholder="Фото 4"></image-slot>
+        <image-slot id="{{ p.thumb4 }}" style="width:100%;height:80px" shape="rounded" radius="8" placeholder="Фото 5"></image-slot>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:8px">{{ p.brandName }}</div>
+      <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:16px">{{ p.nameOut }}</div>
+      <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:28px">{{ p.descOut }}</div>
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Separator" hint-size="100%,1px"></x-import>
+      <div style="margin-top:24px">
+        <div style="font-size:14px;font-weight:600;color:var(--fg-default);margin-bottom:14px">{{ pt.specs }}</div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Table" columns="{{ specColumns }}" rows="{{ specRows }}" hint-size="100%,140px"></x-import>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:700px">
+    <div style="font-size:20px;line-height:28px;font-weight:600;letter-spacing:-0.005em;margin-bottom:12px">{{ pt.composition }}</div>
+    <div style="font-size:15px;line-height:24px;color:var(--fg-muted)">{{ p.compositionOut }}</div>
+  </div>
+</div>
+</sc-if>
+<sc-if value="{{ notFound }}" hint-placeholder-val="{{ false }}">
+  <div style="padding:96px 32px;text-align:center;color:var(--fg-muted)">{{ pt.notFound }} <a href="Catalog.dc.html">{{ pt.catalog }}</a></div>
+</sc-if>
+
+<div style="max-width:1200px;margin:0 auto 72px;padding:0 32px">
+  <div class="pr-cta" style="background:var(--bg-muted);border-radius:12px;padding:40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
+    <div>
+      <div style="font-size:22px;font-weight:600;letter-spacing:-0.006em;color:var(--fg-default);margin-bottom:8px">{{ h.catalogTitle }}</div>
+      <div style="font-size:15px;line-height:22px;color:var(--fg-muted)">{{ h.catalogDesc }}</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" type="email" placeholder="you@company.com" style="width:260px" hint-size="260px,40px"></x-import>
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" hint-size="auto,40px">{{ h.catalogBtn }}</x-import>
+    </div>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, i18n: null };
+  async componentDidMount() {
+    const [data, i18n, tr] = await Promise.all([import("./data.js"), import("./i18n.js"), import("./transitions.js")]);
+    tr.bindPageTransitions();
+    this.setState({ data, i18n });
+  }
+  renderVals() {
+    const d = this.state.data, mod = this.state.i18n;
+    if (!d || !mod) return { loaded: false, notFound: false };
+    const lang = mod.getLang();
+    const en = lang === "en";
+    const pt = mod.t[lang].product;
+    const h = mod.t[lang].home;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const prod = d.products.find(x => x.id === id) || d.products[0];
+    if (!prod) return { loaded: false, notFound: true, pt, h };
+    const brand = d.brands.find(b => b.id === prod.brand) || {};
+    return {
+      loaded: true,
+      notFound: false,
+      pt, h,
+      p: {
+        ...prod,
+        brandName: brand.name || prod.brand,
+        nameOut: en ? prod.nameEn : prod.name,
+        descOut: en ? prod.descEn : prod.desc,
+        compositionOut: en ? prod.compositionEn : prod.composition,
+        priceLabel: `${prod.price} ₴`,
+        mainImgId: `p-${prod.id}-main`,
+        thumb1: `p-${prod.id}-t1`, thumb2: `p-${prod.id}-t2`, thumb3: `p-${prod.id}-t3`, thumb4: `p-${prod.id}-t4`,
+      },
+      specColumns: [en ? "Specification" : "Характеристика", en ? "Value" : "Значення"],
+      specRows: [
+        { [en ? "Specification" : "Характеристика"]: pt.specBrand, [en ? "Value" : "Значення"]: brand.name || prod.brand },
+        { [en ? "Specification" : "Характеристика"]: pt.specVolume, [en ? "Value" : "Значення"]: en ? prod.volumeEn : prod.volume },
+        { [en ? "Specification" : "Характеристика"]: pt.specPurpose, [en ? "Value" : "Значення"]: prod.purpose === "business" ? pt.forBusiness || (en ? "For business" : "Для бізнесу") : pt.forHome || (en ? "For home" : "Для дому") },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

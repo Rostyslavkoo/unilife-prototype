@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+@media (max-width:700px){
+  .br-row{grid-template-columns:1fr!important;text-align:center;justify-items:center}
+}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="brands" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px 96px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:8px">{{ bt.title }}</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:48px;max-width:640px">{{ bt.desc }}</div>
+
+  <div style="display:flex;flex-direction:column;gap:1px;background:var(--border-default)">
+    <sc-for list="{{ brands }}" as="b" hint-placeholder-count="4">
+      <div class="br-row" style="background:var(--bg-page);padding:40px 0;display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:center">
+        <div style="font-size:28px;font-weight:800;letter-spacing:-0.01em">{{ b.name }}</div>
+        <div>
+          <div style="font-size:16px;line-height:26px;color:var(--fg-default);margin-bottom:6px">{{ b.taglineOut }}</div>
+          <div style="font-size:13px;color:var(--fg-muted)">{{ bt.categories }} {{ b.focusOut }}</div>
+        </div>
+        <a href="{{ b.href }}" style="text-decoration:none">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" variant="outline" hint-size="auto,40px">{{ bt.cta }}</x-import>
+        </a>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, i18n: null };
+  async componentDidMount() {
+    const [data, i18n, tr] = await Promise.all([import("./data.js"), import("./i18n.js"), import("./transitions.js")]);
+    tr.bindPageTransitions();
+    this.setState({ data, i18n });
+  }
+  renderVals() {
+    const d = this.state.data, mod = this.state.i18n;
+    if (!d || !mod) return {};
+    const lang = mod.getLang();
+    const en = lang === "en";
+    return { bt: mod.t[lang].brands, brands: d.brands.map(b => ({ ...b, href: `Catalog.dc.html?brand=${b.id}`, taglineOut: en ? b.taglineEn : b.tagline, focusOut: en ? b.focusEn : b.focus })) };
+  }
+}
+</script>
+</body>
+</html>

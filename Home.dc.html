@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0;overflow-x:hidden}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+@media (max-width:900px){
+  .hm-hero{grid-template-columns:1fr!important}
+  .hm-hero>div,.hm-hero>*{min-width:0}
+  .hm-grid4{grid-template-columns:repeat(2,1fr)!important}
+  .hm-grid3{grid-template-columns:repeat(2,1fr)!important}
+  .hm-cta{grid-template-columns:1fr!important}
+}
+@media (max-width:600px){
+  .hm-grid4,.hm-grid3{grid-template-columns:1fr!important}
+  .hm-hero-title{font-size:34px!important;line-height:40px!important}
+}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page)">
+<dc-import name="Header" active-page="home" hint-size="100%,72px"></dc-import>
+
+<section style="padding:72px 32px;background:var(--bg-muted)">
+  <div class="hm-hero" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+    <div>
+      <div class="hm-hero-title" style="font-size:48px;line-height:48px;font-weight:800;letter-spacing:-0.012em;color:var(--fg-default);margin-bottom:20px;max-width:520px">{{ h.heroTitle }}</div>
+      <div style="font-size:18px;line-height:28px;color:var(--fg-muted);margin-bottom:28px;max-width:460px">{{ h.heroDesc }}</div>
+      <div style="display:flex;gap:12px">
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" onClick="{{ goCatalog }}" hint-size="auto,40px">{{ h.ctaCatalog }}</x-import>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" variant="outline" onClick="{{ goBrands }}" hint-size="auto,40px">{{ h.ctaBrands }}</x-import>
+      </div>
+    </div>
+    <div style="width:100%;min-width:0;overflow:hidden;border-radius:12px">
+      <image-slot id="hero" style="width:100%;height:380px" shape="rounded" radius="12" placeholder="Фото: лінійка продукції Unilife"></image-slot>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 32px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin-bottom:32px">
+      <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;color:var(--brand-800)">{{ h.brands }}</div>
+      <a href="Brands.dc.html" style="font-size:14px;font-weight:500">{{ h.allBrands }}</a>
+    </div>
+    <div class="hm-grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <sc-for list="{{ brands }}" as="b" hint-placeholder-count="4">
+        <a href="Brands.dc.html" style="text-decoration:none;display:block;height:100%">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" style="height:150px;display:flex;flex-direction:column;justify-content:center" hint-size="100%,150px">
+            <div style="font-size:22px;font-weight:700;color:var(--fg-default);margin-bottom:8px">{{ b.name }}</div>
+            <div style="font-size:14px;line-height:20px;color:var(--fg-muted)">{{ b.taglineOut }}</div>
+          </x-import>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 32px;background:var(--bg-muted)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;color:var(--brand-800);margin-bottom:32px;text-align:center">{{ h.products }}</div>
+    <div class="hm-grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <sc-for list="{{ categories }}" as="c" hint-placeholder-count="4">
+        <a href="{{ c.href }}" style="text-decoration:none;display:block">
+          <div style="height:150px;border-radius:var(--radius-lg);background:var(--bg-surface);box-shadow:inset 0 0 0 1px var(--border-default);padding:24px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+            <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="{{ c.icon }}" size="28" style="color:var(--primary);margin-bottom:12px" hint-size="28px,28px"></x-import>
+            <div style="font-weight:600;font-size:16px;color:var(--fg-default);line-height:22px">{{ c.labelOut }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:56px 32px;background:var(--brand-800)">
+  <div class="hm-cta" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
+    <div>
+      <div style="font-size:22px;font-weight:600;letter-spacing:-0.006em;color:var(--white);margin-bottom:8px">{{ h.catalogTitle }}</div>
+      <div style="font-size:15px;line-height:22px;color:rgba(255,255,255,0.75)">{{ h.catalogDesc }}</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" type="email" placeholder="you@company.com" style="width:260px" hint-size="260px,40px"></x-import>
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" style="background:var(--white);color:var(--brand-800)" hint-size="auto,40px">{{ h.catalogBtn }}</x-import>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 32px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;margin-bottom:32px">
+      <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;color:var(--brand-800)">{{ h.news }}</div>
+      <a href="News.dc.html" style="font-size:14px;font-weight:500">{{ h.allNews }}</a>
+    </div>
+    <div class="hm-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <sc-for list="{{ newsItems }}" as="n" hint-placeholder-count="3">
+        <a href="{{ n.href }}" style="text-decoration:none;color:inherit;display:block">
+          <image-slot id="{{ n.imgId }}" style="width:100%;height:160px;margin-bottom:12px" shape="rounded" radius="8" placeholder="Новина"></image-slot>
+          <div style="font-size:13px;color:var(--fg-subtle);margin-bottom:6px">{{ n.dateLabel }}</div>
+          <div style="font-weight:600;font-size:16px;line-height:24px;color:var(--fg-default);margin-bottom:6px">{{ n.titleOut }}</div>
+          <div style="font-size:14px;line-height:20px;color:var(--fg-muted)">{{ n.excerptOut }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:56px 32px;background:var(--bg-muted)">
+  <div style="max-width:1200px;margin:0 auto;text-align:center">
+    <div style="font-size:14px;font-weight:700;color:var(--brand-800);margin-bottom:24px;text-transform:uppercase;letter-spacing:0.04em">{{ h.partners }}</div>
+    <div style="display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap">
+      <sc-for list="{{ partnerNames }}" as="p" hint-placeholder-count="4">
+        <div style="font-size:22px;font-weight:700;color:var(--fg-muted)">{{ p.name }}</div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, i18n: null };
+  async componentDidMount() {
+    const [data, i18n, tr] = await Promise.all([import("./data.js"), import("./i18n.js"), import("./transitions.js")]);
+    tr.bindPageTransitions();
+    this.setState({ data, i18n });
+  }
+  renderVals() {
+    const d = this.state.data, mod = this.state.i18n;
+    if (!d || !mod) return {};
+    const lang = mod.getLang();
+    const en = lang === "en";
+    const h = mod.t[lang].home;
+    const catIcon = { fabric: "Catalog.dc.html?cat=fabric", dish: "Catalog.dc.html?cat=dish", clean: "Catalog.dc.html?cat=clean", personal: "Catalog.dc.html?cat=personal" };
+    const months = en ? ["January","February","March","April","May","June","July","August","September","October","November","December"]
+      : ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+    const fmt = (iso) => { const dt = new Date(iso); return en ? `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}` : `${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`; };
+    return {
+      h,
+      brands: d.brands.map(b => ({ ...b, taglineOut: en ? b.taglineEn : b.tagline })),
+      categories: d.categories.map(c => ({ ...c, href: catIcon[c.id], labelOut: en ? c.labelEn : c.label })),
+      newsItems: d.news.slice(0, 3).map(n => ({ ...n, href: `Article.dc.html?id=${n.id}`, imgId: `news-${n.id}`, dateLabel: fmt(n.date), titleOut: en ? n.titleEn : n.title, excerptOut: en ? n.excerptEn : n.excerpt })),
+      partnerNames: d.partners,
+      goCatalog: () => { window.location.href = "Catalog.dc.html"; },
+      goBrands: () => { window.location.href = "Brands.dc.html"; },
+    };
+  }
+}
+</script>
+</body>
+</html>

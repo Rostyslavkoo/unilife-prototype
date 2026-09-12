@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+@media (max-width:700px){
+  .pt-logos{grid-template-columns:repeat(2,1fr)!important}
+  .pt-features{grid-template-columns:1fr!important}
+}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="partners" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px 96px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:8px">{{ pt.title }}</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:48px;max-width:680px">{{ pt.desc }}</div>
+
+  <div class="pt-logos" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:64px">
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" style="text-align:center;padding:32px 16px" hint-size="100%,100px">Auchan</x-import>
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" style="text-align:center;padding:32px 16px" hint-size="100%,100px">Silpo</x-import>
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" style="text-align:center;padding:32px 16px" hint-size="100%,100px">Metro</x-import>
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" style="text-align:center;padding:32px 16px" hint-size="100%,100px">Lidl</x-import>
+  </div>
+
+  <div class="pt-features" style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" hint-size="100%,140px">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconFactory" size="24" style="color:var(--primary);margin-bottom:12px" hint-size="24px,24px"></x-import>
+      <div style="font-weight:600;font-size:16px;margin-bottom:8px">{{ pt.f1t }}</div>
+      <div style="font-size:14px;line-height:22px;color:var(--fg-muted)">{{ pt.f1d }}</div>
+    </x-import>
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" hint-size="100%,140px">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconShieldCheck" size="24" style="color:var(--primary);margin-bottom:12px" hint-size="24px,24px"></x-import>
+      <div style="font-weight:600;font-size:16px;margin-bottom:8px">{{ pt.f2t }}</div>
+      <div style="font-size:14px;line-height:22px;color:var(--fg-muted)">{{ pt.f2d }}</div>
+    </x-import>
+  </div>
+
+  <div style="margin-top:56px;text-align:center">
+    <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" onClick="{{ goContact }}" hint-size="auto,44px">{{ pt.cta }}</x-import>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { i18n: null };
+  async componentDidMount() {
+    const mod = await import("./i18n.js");
+    const tr = await import("./transitions.js");
+    tr.bindPageTransitions();
+    this.setState({ i18n: mod });
+  }
+  renderVals() {
+    const mod = this.state.i18n;
+    if (!mod) return {};
+    return { pt: mod.t[mod.getLang()].partners, goContact: () => { window.location.href = "Contact.dc.html"; } };
+  }
+}
+</script>
+</body>
+</html>

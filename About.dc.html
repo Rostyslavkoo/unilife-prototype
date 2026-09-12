@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="about" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:760px;margin:0 auto;padding:64px 32px 96px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;color:var(--brand-800);margin-bottom:32px;text-align:center">About Us</div>
+  <div style="font-size:18px;line-height:28px;color:var(--fg-default);margin-bottom:20px">We develop and manufacture laundry, home care, and personal care products that combine strong performance, sustainability and fair pricing.</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:16px">Our mission is to make high-quality products affordable—without compromising on standards, compliance, or reliability.</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:16px">Through efficient manufacturing and a hands-on, market-driven approach to innovation, we respond quickly to the needs of our markets and the people who use our products every day.</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:16px">We support our partners with attractive price points, healthy margins and sustainable growth opportunities.</div>
+  <div style="font-size:18px;line-height:28px;font-weight:600;color:var(--fg-default)">We don't overpromise. We deliver on our commitments.</div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    import("./transitions.js").then(tr => tr.bindPageTransitions());
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes catFadeA{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes catFadeB{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+.cat-filter-toggle{display:none!important}
+@media (max-width:800px){
+  .cat-layout{grid-template-columns:1fr!important}
+  .cat-layout aside{position:static!important}
+  .cat-cta{grid-template-columns:1fr!important}
+  .cat-aside{display:none!important}
+  .cat-aside.cat-aside-open{display:flex!important}
+  .cat-filter-toggle{display:flex!important}
+}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="catalog" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px 80px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:8px">{{ ct.title }}</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:32px">{{ ct.desc }}</div>
+
+  <div class="cat-layout" style="display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;align-items:start">
+    <aside class="{{ asideClass }}" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:16px;font-weight:600">{{ ct.filters }}</div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" variant="link" size="sm" onClick="{{ clearFilters }}" hint-size="auto,20px">{{ ct.clear }}</x-import>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px">{{ ct.category }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ categoryFilters }}" as="c" hint-placeholder-count="4">
+            <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Checkbox" label="{{ c.label }}" checked="{{ c.checked }}" onChange="{{ c.onChange }}" hint-size="100%,20px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px">{{ ct.brand }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ brandFilters }}" as="b" hint-placeholder-count="4">
+            <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Checkbox" label="{{ b.label }}" checked="{{ b.checked }}" onChange="{{ b.onChange }}" hint-size="100%,20px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px">{{ ct.purpose }}</div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.RadioGroup" options="{{ purposeOptions }}" value="{{ purpose }}" onChange="{{ setPurpose }}" hint-size="100%,90px"></x-import>
+      </div>
+    </aside>
+
+    <div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:nowrap">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" variant="outline" size="sm" onClick="{{ toggleFiltersOpen }}" class="cat-filter-toggle" hint-size="auto,36px">{{ ct.filters }} {{ filtersOpenLabel }}</x-import>
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" placeholder="{{ ct.search }}" value="{{ search }}" onChange="{{ setSearch }}" style="min-width:0;flex:1" hint-size="280px,36px"></x-import>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="font-size:14px;color:var(--fg-muted);white-space:nowrap">{{ resultLabel }}</div>
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Select" options="{{ sortOptions }}" value="{{ sort }}" onChange="{{ setSort }}" style="width:220px" hint-size="220px,36px"></x-import>
+        </div>
+      </div>
+
+      <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;animation:{{ gridAnim }}">
+          <sc-for list="{{ filteredProducts }}" as="p" hint-placeholder-count="9">
+            <a href="{{ p.href }}" style="text-decoration:none;color:inherit">
+              <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Card" hint-size="100%,300px">
+                <image-slot id="{{ p.imgId }}" style="width:100%;height:140px;margin-bottom:14px" shape="rounded" radius="8" placeholder="Фото товару"></image-slot>
+                <div style="font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px">{{ p.brandName }}</div>
+                <div style="font-size:16px;font-weight:600;line-height:22px;color:var(--fg-default);margin-bottom:6px;min-height:44px">{{ p.nameOut }}</div>
+                <div style="font-size:13px;color:var(--fg-muted);margin-bottom:12px">{{ p.volumeOut }}</div>
+                <div style="display:flex;justify-content:flex-end;align-items:center">
+                  <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" variant="outline" size="sm" hint-size="auto,32px">{{ ct.details }}</x-import>
+                </div>
+              </x-import>
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:64px 0;text-align:center;color:var(--fg-muted)">{{ ct.noResults }}</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div class="cat-cta" style="margin-top:64px;background:var(--bg-muted);border-radius:12px;padding:40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
+    <div>
+      <div style="font-size:22px;font-weight:600;letter-spacing:-0.006em;color:var(--fg-default);margin-bottom:8px">{{ h.catalogTitle }}</div>
+      <div style="font-size:15px;line-height:22px;color:var(--fg-muted)">{{ h.catalogDesc }}</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" type="email" placeholder="you@company.com" style="width:260px" hint-size="260px,40px"></x-import>
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" hint-size="auto,40px">{{ h.catalogBtn }}</x-import>
+    </div>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    data: null,
+    i18n: null,
+    cats: [],
+    brandsSel: [],
+    purpose: "any",
+    search: "",
+    sort: "name",
+    filtersOpen: false,
+    filterTick: 0,
+  };
+  async componentDidMount() {
+    const [mod, i18n, tr] = await Promise.all([import("./data.js"), import("./i18n.js"), import("./transitions.js")]);
+    tr.bindPageTransitions();
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("cat");
+    const brand = params.get("brand");
+    this.setState({ data: mod, i18n, cats: cat ? [cat] : [], brandsSel: brand ? [brand] : [] });
+  }
+  bump() { this.setState(s => ({ filterTick: s.filterTick + 1 })); }
+  toggleCat(id) {
+    this.setState(s => ({ cats: s.cats.includes(id) ? s.cats.filter(x => x !== id) : [...s.cats, id] }));
+    this.bump();
+  }
+  toggleBrand(id) {
+    this.setState(s => ({ brandsSel: s.brandsSel.includes(id) ? s.brandsSel.filter(x => x !== id) : [...s.brandsSel, id] }));
+    this.bump();
+  }
+  renderVals() {
+    const d = this.state.data, mod = this.state.i18n;
+    if (!d || !mod) return {};
+    const lang = mod.getLang();
+    const en = lang === "en";
+    const ct = mod.t[lang].catalog;
+    const h = mod.t[lang].home;
+    const { cats, brandsSel, purpose, search, sort } = this.state;
+    const brandName = id => (d.brands.find(b => b.id === id) || {}).name || id;
+
+    let list = d.products.filter(p => {
+      if (cats.length && !cats.includes(p.category)) return false;
+      if (brandsSel.length && !brandsSel.includes(p.brand)) return false;
+      if (purpose !== "any" && p.purpose !== purpose) return false;
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
+      return true;
+    });
+    list = [...list].sort((a, b) => a.name.localeCompare(b.name, "uk"));
+
+    return {
+      ct, h,
+      categoryFilters: d.categories.map(c => ({ id: c.id, label: en ? c.labelEn : c.label, checked: cats.includes(c.id), onChange: () => this.toggleCat(c.id) })),
+      brandFilters: d.brands.map(b => ({ id: b.id, label: b.name, checked: brandsSel.includes(b.id), onChange: () => this.toggleBrand(b.id) })),
+      purposeOptions: [{ value: "any", label: ct.any }, { value: "home", label: ct.forHome }, { value: "business", label: ct.forBusiness }],
+      purpose,
+      setPurpose: (v) => { this.setState({ purpose: v }); this.bump(); },
+      search,
+      setSearch: (e) => { this.setState({ search: e.target.value }); this.bump(); },
+      sortOptions: [{ value: "name", label: ct.sortName }],
+      sort,
+      setSort: (v) => this.setState({ sort: v }),
+      clearFilters: () => { this.setState({ cats: [], brandsSel: [], purpose: "any", search: "" }); this.bump(); },
+      asideClass: "cat-aside" + (this.state.filtersOpen ? " cat-aside-open" : ""),
+      toggleFiltersOpen: () => this.setState(s => ({ filtersOpen: !s.filtersOpen })),
+      filtersOpenLabel: this.state.filtersOpen ? "▲" : "▼",
+      gridAnim: (this.state.filterTick % 2 === 0 ? "catFadeA" : "catFadeB") + " .28s ease-out",
+      resultLabel: en ? `${list.length} product${list.length === 1 ? "" : "s"}` : `${list.length} товар${list.length === 1 ? "" : list.length >= 2 && list.length <= 4 ? "и" : "ів"}`,
+      hasResults: list.length > 0,
+      noResults: list.length === 0,
+      filteredProducts: list.map(p => ({ ...p, href: `Product.dc.html?id=${p.id}`, imgId: `cat-${p.id}`, brandName: brandName(p.brand), nameOut: en ? p.nameEn : p.name, volumeOut: en ? p.volumeEn : p.volume })),
+    };
+  }
+}
+</script>
+</body>
+</html>

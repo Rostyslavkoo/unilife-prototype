@@ -1,0 +1,10 @@
+@import url('fonts/inter.css');
+@import url('tokens/colors.css');
+@import url('tokens/typography.css');
+@import url('tokens/spacing.css');
+@import url('tokens/effects.css');
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page)}
+a{color:var(--primary)}
+a:hover{color:var(--primary-hover)}
+h1,h2,h3,h4,p{margin:0}

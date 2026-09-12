@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<style>body{margin:0}a{color:var(--primary);text-decoration:none}a:hover{color:var(--primary-hover)}
+.hdr-burger{display:none}
+@media (max-width:800px){
+  .hdr-navmenu,.hdr-social{display:none!important}
+  .hdr-burger{display:flex!important}
+}
+</style>
+</helmet>
+<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border-default);background:var(--bg-page);font-family:var(--font-sans);gap:24px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:32px">
+    <a href="Home.dc.html" style="display:flex;align-items:center;flex-shrink:0"><img src="assets/logo.svg" alt="Unilife" style="height:32px"/></a>
+    <div class="hdr-navmenu">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.NavigationMenu" items="{{ navItems }}" hint-size="auto,40px"></x-import>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:18px">
+    <div style="display:flex;gap:6px;font-size:13px;font-weight:500;color:var(--fg-muted)"><span style="cursor:pointer;color:{{ ukColor }}" onClick="{{ pickUk }}">UK</span><span>/</span><span style="cursor:pointer;color:{{ enColor }}" onClick="{{ pickEn }}">EN</span></div>
+    <div class="hdr-social" style="display:flex;align-items:center;gap:14px;color:var(--fg-muted)">
+      <a href="#" aria-label="Facebook" style="display:flex;color:var(--fg-muted)"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconFacebook" size="18" hint-size="18px,18px"></x-import></a>
+      <a href="#" aria-label="Instagram" style="display:flex;color:var(--fg-muted)"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconInstagram" size="18" hint-size="18px,18px"></x-import></a>
+      <a href="#" aria-label="LinkedIn" style="display:flex;color:var(--fg-muted)"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconLinkedin" size="18" hint-size="18px,18px"></x-import></a>
+    </div>
+    <button class="hdr-burger" onClick="{{ toggleMobile }}" style="align-items:center;justify-content:center;width:36px;height:36px;border:none;background:transparent;cursor:pointer;color:var(--fg-default);padding:0">
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="{{ burgerIcon }}" size="24" hint-size="24px,24px"></x-import>
+    </button>
+  </div>
+</header>
+<sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:sticky;top:65px;z-index:49;background:var(--bg-page);border-bottom:1px solid var(--border-default);padding:16px 32px;display:flex;flex-direction:column;gap:16px;font-family:var(--font-sans)">
+    <sc-for list="{{ mobileItems }}" as="m" hint-placeholder-count="3">
+      <a href="{{ m.href }}" style="font-size:16px;font-weight:500;color:var(--fg-default)" onClick="{{ closeMobile }}">{{ m.label }}</a>
+    </sc-for>
+    <div style="display:flex;gap:16px;padding-top:8px;border-top:1px solid var(--border-default)">
+      <a href="#" aria-label="Facebook"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconFacebook" size="18" hint-size="18px,18px"></x-import></a>
+      <a href="#" aria-label="Instagram"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconInstagram" size="18" hint-size="18px,18px"></x-import></a>
+      <a href="#" aria-label="LinkedIn"><x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconLinkedin" size="18" hint-size="18px,18px"></x-import></a>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:72},&quot;activePage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;catalog&quot;,&quot;product&quot;,&quot;brands&quot;,&quot;news&quot;,&quot;article&quot;,&quot;partners&quot;,&quot;contact&quot;]}}">
+class Component extends DCLogic {
+  state = { i18n: null, mobileOpen: false };
+  async componentDidMount() {
+    const mod = await import("./i18n.js");
+    this.setState({ i18n: mod });
+  }
+  renderVals() {
+    const mod = this.state.i18n;
+    if (!mod) return {};
+    const lang = mod.getLang();
+    const n = mod.t[lang].nav;
+    return {
+      navItems: [
+        { label: n.about, href: "About.dc.html" },
+        { label: n.products, href: "Catalog.dc.html", content: [
+          { label: n.fabric, description: n.fabricDesc, href: "Catalog.dc.html?cat=fabric" },
+          { label: n.dish, description: n.dishDesc, href: "Catalog.dc.html?cat=dish" },
+          { label: n.clean, description: n.cleanDesc, href: "Catalog.dc.html?cat=clean" },
+          { label: n.personal, description: n.personalDesc, href: "Catalog.dc.html?cat=personal" },
+        ]},
+        { label: n.news, href: "News.dc.html" },
+      ],
+      mobileItems: [
+        { label: n.about, href: "About.dc.html" },
+        { label: n.products, href: "Catalog.dc.html" },
+        { label: n.news, href: "News.dc.html" },
+      ],
+      mobileOpen: this.state.mobileOpen,
+      burgerIcon: this.state.mobileOpen ? "IconX" : "IconMenu",
+      toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen })),
+      closeMobile: () => this.setState({ mobileOpen: false }),
+      ukColor: lang === "uk" ? "var(--fg-default)" : "var(--fg-subtle)",
+      enColor: lang === "en" ? "var(--fg-default)" : "var(--fg-subtle)",
+      pickUk: () => mod.setLang("uk"),
+      pickEn: () => mod.setLang("en"),
+    };
+  }
+}
+</script>
+</body>
+</html>

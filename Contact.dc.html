@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/fonts/inter.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/colors.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/typography.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/tokens/effects.css">
+<link rel="stylesheet" href="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/styles.css">
+<script src="_ds/unilife-design-system-329c9ab8-f5c3-4dd6-bd94-d5d868cf8aec/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0}a{color:var(--primary)}a:hover{color:var(--primary-hover)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-root{animation:pageIn .32s ease-out}
+@media (max-width:700px){.ctc-grid{grid-template-columns:1fr!important}}
+</style>
+</helmet>
+<div class="page-root" style="font-family:var(--font-sans);color:var(--fg-default);background:var(--bg-page);min-height:100vh">
+<dc-import name="Header" active-page="contact" hint-size="100%,72px"></dc-import>
+
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px 96px">
+  <div style="font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.007em;margin-bottom:8px">{{ ct.title }}</div>
+  <div style="font-size:16px;line-height:28px;color:var(--fg-muted);margin-bottom:48px;max-width:640px">{{ ct.desc }}</div>
+
+  <div class="ctc-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:56px">
+    <div>
+      <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:32px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconMapPin" size="20" style="color:var(--primary);flex-shrink:0;margin-top:2px" hint-size="20px,20px"></x-import>
+          <div style="font-size:15px;line-height:22px;color:var(--fg-default)">м. Київ, вул. Промислова, 12</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconPhone" size="20" style="color:var(--primary);flex-shrink:0;margin-top:2px" hint-size="20px,20px"></x-import>
+          <a href="tel:+380440000000" style="font-size:15px;color:var(--fg-default)">+380 44 000 00 00</a>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Icon" name="IconMail" size="20" style="color:var(--primary);flex-shrink:0;margin-top:2px" hint-size="20px,20px"></x-import>
+          <a href="mailto:info@unilife-group.com" style="font-size:15px;color:var(--fg-default)">info@unilife-group.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Label" hint-size="auto,20px">{{ ct.name }}</x-import>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" placeholder="{{ ct.namePh }}" style="width:100%;margin-top:6px" hint-size="100%,36px"></x-import>
+      </div>
+      <div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Label" hint-size="auto,20px">Email</x-import>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Input" type="email" placeholder="you@company.com" style="width:100%;margin-top:6px" hint-size="100%,36px"></x-import>
+      </div>
+      <div>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Label" hint-size="auto,20px">{{ ct.message }}</x-import>
+        <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Textarea" placeholder="{{ ct.messagePh }}" style="width:100%;margin-top:6px;min-height:120px" hint-size="100%,120px"></x-import>
+      </div>
+      <x-import component-from-global-scope="UnilifeDesignSystem_329c9a.Button" style="align-self:flex-start" hint-size="auto,40px">{{ ct.send }}</x-import>
+    </div>
+  </div>
+</div>
+
+<dc-import name="Footer" hint-size="100%,320px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { i18n: null };
+  async componentDidMount() {
+    const mod = await import("./i18n.js");
+    const tr = await import("./transitions.js");
+    tr.bindPageTransitions();
+    this.setState({ i18n: mod });
+  }
+  renderVals() {
+    const mod = this.state.i18n;
+    if (!mod) return {};
+    return { ct: mod.t[mod.getLang()].contact };
+  }
+}
+</script>
+</body>
+</html>
